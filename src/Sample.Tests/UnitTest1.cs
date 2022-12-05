@@ -1,14 +1,37 @@
-using System;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Threading.Tasks;
+using AutoFixture.Xunit2;
 using Xunit;
-using static Sample.Prelude;
 
 namespace Sample.Tests;
+
+public record Dto
+(
+    IEnumerable<(string BulkId, int Price)> Results
+);
 
 public class PreludeSpec
 {
     [Fact]
-    public void AddSuccess()
+    //[InlineAutoData]
+    public Task AddSuccess()
     {
-        Assert.Equal(3, add(1)(2));
+        var dto = new Dto
+        (
+            new []
+            {
+                ("1", 2)
+            }
+        );
+
+        var ret = JsonSerializer.Serialize(dto, new JsonSerializerOptions
+        {
+            
+        });
+
+
+
+        return Task.CompletedTask;
     }
 }
